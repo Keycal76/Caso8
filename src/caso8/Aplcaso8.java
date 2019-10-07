@@ -10,5 +10,6 @@ public class Aplcaso8 {
     public static void main(String[] args) {
         Caso8 caso8=new Caso8(new Ventana());
         caso8.analizarImagenes();
+        //caso8.iniciarVista(1);
     }
 }
