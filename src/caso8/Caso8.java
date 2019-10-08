@@ -50,8 +50,6 @@ public class Caso8 extends Frame implements ActionListener{
             ancho=img.getWidth();
             System.out.println("Alto: "+img.getHeight());
             System.out.println("Ancho: "+img.getWidth());
-            //int r=(int) (Math.random()*5+30);
-            //int r2=(int) (Math.random()*5+30);
             int r=10,r2=10;
             for(int i=0;i<img.getHeight()-1;i+=r){
                 for(int j=0;j<img.getWidth()-1;j+=r2){
@@ -60,16 +58,19 @@ public class Caso8 extends Frame implements ActionListener{
                         R = color.getRed();
                         G = color.getGreen();
                         B = color.getBlue();
-                        if(R<245 && G<245 && B<245){
+                        if(R<255 && G<255 && B<255){
                             puntos.add(new Punto(i,j,R,G,B));
-                            System.out.println("Rojo: "+R+" Verde: "+G+" Azul: "+B);    
+                            //System.out.println("Rojo: "+R+" Verde: "+G+" Azul: "+B); 
+                            //System.out.println("IMPRIMIENDO "+i+" "+j+" "+r+" "+r2);
                         }
                     }catch(java.lang.ArrayIndexOutOfBoundsException e){
                         
                     }catch(java.lang.NullPointerException e){
                     
                     }
+                    r2=(int) (Math.random()*90)+10;
                 }
+            r=(int) (Math.random()*90)+10;
             }
         } catch (IOException ex) {
             Logger.getLogger(Caso8.class.getName()).log(Level.SEVERE, null, ex);
@@ -94,10 +95,9 @@ public class Caso8 extends Frame implements ActionListener{
             g.drawLine(0, i, 800, i); 
         }
         for(int i=0;i<puntos.size();i++){
-            g.drawOval(puntos.get(i).x*800/largo, puntos.get(i).y*800/ancho, 3, 3);
-            System.out.println("IMPRIMIENDO "+puntos.get(i).x*800/largo+" "+puntos.get(i).y*800/ancho);
+            g.drawOval(puntos.get(i).x*800/ancho, puntos.get(i).y*800/largo, 2, 2);
+            //System.out.println("IMPRIMIENDO "+puntos.get(i).x*800/ancho+" "+puntos.get(i).y*800/largo);
         }
-        //g.fillOval(0, 0, 90, 90);
         //vista.labelImagen.setText("ALGO");
     }
 
