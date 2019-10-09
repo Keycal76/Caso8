@@ -102,12 +102,12 @@ public class Caso8 extends Frame implements ActionListener{
         g.setColor(Color.BLACK);
         
         for(int i=0;i<puntos.size();i++){
-            g.drawOval(puntos.get(i).x*800/ancho, puntos.get(i).y*800/largo, 2, 2);
+            g.drawOval(puntos.get(i).x*500/ancho, puntos.get(i).y*500/largo, 2, 2);
             //System.out.println("IMPRIMIENDO "+puntos.get(i).x*800/ancho+" "+puntos.get(i).y*800/largo);
         }
-        for(int i=0;i<900;i+=100){
-            g.drawLine(i, 0, i, 800); 
-            g.drawLine(0, i, 800, i); 
+        for(int i=0;i<600;i+=100){
+            g.drawLine(i, 0, i, 500); 
+            g.drawLine(0, i, 500, i); 
         }
         //vista.labelImagen.setText("ALGO");
     }
