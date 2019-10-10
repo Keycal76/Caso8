@@ -27,9 +27,10 @@ import javax.swing.JPanel;
 public class Caso8 extends Frame implements ActionListener{
 
     public Ventana vista;
-    public ArrayList<Punto> puntos=new ArrayList<Punto>();
+    public ArrayList<Imagen> imagenes=new ArrayList<Imagen>();
     int largo;
     int ancho;
+    
     public Caso8(Ventana pVista){
         vista=pVista;
         this.vista.jButton1.addActionListener(this);
@@ -37,55 +38,14 @@ public class Caso8 extends Frame implements ActionListener{
         vista.setVisible(true);
     }
     
-    public void analizarImagenes() {
-        File file = new File("src/caso8/IMG"+Integer.toString(3)+".jpg");
-        System.out.println(file.canRead());
-        BufferedImage img;
-        try {
-            img=ImageIO.read(file);
-            largo=img.getHeight();
-            ancho=img.getWidth();
-            System.out.println("Alto: "+img.getHeight());
-            System.out.println("Ancho: "+img.getWidth());
-            for(int sectorX=0;sectorX<10;sectorX++){
-                for(int sectorY=0;sectorY<10;sectorY++){
-                    analizarSector(sectorX+1,sectorY+1,img);
-                }
+    public void analizarImagenes() { //"src/caso8/IMG"+Integer.toString(3)+".jpg"
+        imagenes.add(new Imagen("src/caso8/IMG"+Integer.toString(3)+".jpg"));
+        for(int sectorX=0;sectorX<10;sectorX++){
+            for(int sectorY=0;sectorY<10;sectorY++){
+                imagenes.get(0).analizarSector(sectorX, sectorY);
             }
-            
-        } catch (IOException ex) {
-            Logger.getLogger(Caso8.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }    
         iniciarVista(3);
-    }
-    
-    public void analizarSector(int x, int y, BufferedImage img) {
-        int R=0;
-        int G=0;
-        int B=0;
-        
-        int r=0,r2=0;
-        for(int i=0;i<img.getHeight()/10*x-1;i+=r){
-            for(int j=0;j<img.getWidth()/10*y-1;j+=r2){
-                try{
-                    Color color = new Color(img.getRGB(i,j));
-                    R=color.getRed();
-                    G=color.getGreen();
-                    B=color.getBlue();
-                    if(R<255 && G<255 && B<255){
-                        puntos.add(new Punto(i,j,R,G,B));
-                        //System.out.println("Rojo: "+R+" Verde: "+G+" Azul: "+B); 
-                        //System.out.println("IMPRIMIENDO "+i+" "+j+" "+r+" "+r2);
-                    }
-                }catch(java.lang.ArrayIndexOutOfBoundsException e){
-                        
-                }catch(java.lang.NullPointerException e){
-                    
-                }
-                r2=(int) (Math.random()*30)+5;
-            }
-        r=(int) (Math.random()*30)+5;
-        }
     }
     
     public void iniciarVista(int x){
@@ -101,8 +61,8 @@ public class Caso8 extends Frame implements ActionListener{
         super.paintComponents(g);
         g.setColor(Color.BLACK);
         
-        for(int i=0;i<puntos.size();i++){
-            g.drawOval(puntos.get(i).x*500/ancho, puntos.get(i).y*500/largo, 2, 2);
+        for(int i=0;i<imagenes.get(0).puntos.size();i++){
+            g.drawOval(imagenes.get(0).puntos.get(i).x*500/1024, imagenes.get(0).puntos.get(i).y*500/1024, 2, 2);
             //System.out.println("IMPRIMIENDO "+puntos.get(i).x*800/ancho+" "+puntos.get(i).y*800/largo);
         }
         for(int i=0;i<600;i+=100){
