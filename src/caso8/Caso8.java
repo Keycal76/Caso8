@@ -39,13 +39,9 @@ public class Caso8 extends Frame implements ActionListener{
     }
     
     public void analizarImagenes() { //"src/caso8/IMG"+Integer.toString(3)+".jpg"
-        imagenes.add(new Imagen("src/caso8/IMG"+Integer.toString(3)+".jpg"));
-        for(int sectorX=0;sectorX<10;sectorX++){
-            for(int sectorY=0;sectorY<10;sectorY++){
-                imagenes.get(0).analizarSector(sectorX, sectorY);
-            }
-        }    
-        iniciarVista(3);
+        imagenes.add(new Imagen("src/caso8/IMG"+Integer.toString(1)+".jpg"));
+        imagenes.get(0).analizarSectores();  
+        iniciarVista(1);
     }
     
     public void iniciarVista(int x){
@@ -60,10 +56,11 @@ public class Caso8 extends Frame implements ActionListener{
     public void paint(Graphics g){
         super.paintComponents(g);
         g.setColor(Color.BLACK);
-        
-        for(int i=0;i<imagenes.get(0).puntos.size();i++){
-            g.drawOval(imagenes.get(0).puntos.get(i).x*500/1024, imagenes.get(0).puntos.get(i).y*500/1024, 2, 2);
-            //System.out.println("IMPRIMIENDO "+puntos.get(i).x*800/ancho+" "+puntos.get(i).y*800/largo);
+        for(int d=0;d<25;d++){
+            for(int i=0;i<imagenes.get(0).sectores.get(d).puntos.size();i++){
+                g.drawOval(imagenes.get(0).sectores.get(d).puntos.get(i).x*500/1024, imagenes.get(0).sectores.get(d).puntos.get(i).y*500/1024, 1, 1);
+                //System.out.println("IMPRIMIENDO "+puntos.get(i).x*800/ancho+" "+puntos.get(i).y*800/largo);
+            }
         }
         for(int i=0;i<600;i+=100){
             g.drawLine(i, 0, i, 500); 
