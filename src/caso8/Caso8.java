@@ -39,7 +39,7 @@ public class Caso8 extends Frame implements ActionListener{
     }
     
     public void analizarImagenes() { //"src/caso8/IMG"+Integer.toString(3)+".jpg"
-        int x=3;
+        int x=1;
         imagenes.add(new Imagen("src/caso8/IMG"+Integer.toString(x)+".jpg"));
         imagenes.get(0).analizarSectores();  
         iniciarVista(x);
@@ -58,7 +58,7 @@ public class Caso8 extends Frame implements ActionListener{
         for(int d=0;d<25;d++){
             for(int i=0;i<imagenes.get(0).sectores.get(d).puntos.size();i++){
                 g.setColor(imagenes.get(0).sectores.get(d).puntos.get(i).color);
-                g.drawOval(imagenes.get(0).sectores.get(d).puntos.get(i).x*500/1024, imagenes.get(0).sectores.get(d).puntos.get(i).y*500/1024, 1, 1);
+                g.drawRect(imagenes.get(0).sectores.get(d).puntos.get(i).x*500/1024, imagenes.get(0).sectores.get(d).puntos.get(i).y*500/1024, 1, 1);
                 //System.out.println("IMPRIMIENDO "+puntos.get(i).x*800/ancho+" "+puntos.get(i).y*800/largo);
             }
         }

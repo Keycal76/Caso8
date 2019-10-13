@@ -62,7 +62,6 @@ public class Sector {
         for(int i=0;i<colores.size();i++){
             int distanciaAux=(int)(Math.pow(colores.get(i).getRed()-R,2)+Math.pow(colores.get(i).getGreen()-G,2)+Math.pow(colores.get(i).getBlue()-B,2));
             distanciaAux=(int)Math.pow(distanciaAux,0.5);
-            //System.out.println("Distancia 1: "+distancia+"    Distancia 2: "+distanciaAux);
             if(distanciaAux<distancia){
                 distancia=distanciaAux;
                 color=colores.get(i);

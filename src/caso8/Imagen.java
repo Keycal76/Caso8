@@ -46,7 +46,6 @@ public class Imagen {
         boolean salir=true;
         int d=0;
         while(salir){
-            //System.out.println(analizarSector());
             if(d==25){
                 d=0;
                 salir=analizarSector();
@@ -54,27 +53,35 @@ public class Imagen {
             //System.out.println(d+" "+sectores.get(d).listo+" "+sectores.get(d).posibilidad);
             if(sectores.get(d).listo!=true){
                 boolean encontrado=false;
-                for(int i=img.getWidth()/5*sectores.get(d).x;i<img.getHeight()/5*(sectores.get(d).x+1);i+=10){//      -1?
-                    for(int j=img.getWidth()/5*sectores.get(d).y;j<img.getWidth()/5*(sectores.get(d).y+1);j+=10){//   -1? 
+                for(int i=img.getWidth()/5*sectores.get(d).x;i<img.getWidth()/5*(sectores.get(d).x+1);i+=1){
+                    if(encontrado==false && (int)((sectores.get(d).posibilidad*0.25*img.getWidth()/5)+img.getWidth()/5*sectores.get(d).x)<i){
+                        i+=img.getWidth()/5*(sectores.get(d).x+1);
+                    }
+                    for(int j=img.getHeight()/5*sectores.get(d).y;j<img.getHeight()/5*(sectores.get(d).y+1);j+=1){//   -1? 
+                        if(encontrado==false && (int)((sectores.get(d).posibilidad*0.25*img.getWidth()/5)+img.getWidth()/5*sectores.get(d).x)>j){
+                            j+=img.getHeight()/5*(sectores.get(d).y+1);
+                        }
                         try{
-                            Color color=new Color(img.getRGB(i,j));
+                            Color color=new Color(img.getRGB(r,r2));
                             R=color.getRed();
                             G=color.getGreen();
                             B=color.getBlue();
                             if(R<255 && G<255 && B<255 && sectores.get(d).listo==false){
-                                sectores.get(d).anadirPunto(i, j, R, G, B);
+                                sectores.get(d).anadirPunto(r, r2, R, G, B);
                                 encontrado=true;
-                                //System.out.println(sectores.get(d).listo+" "+sectores.get(d).posibilidad); 
-                                //System.out.println("IMPRIMIENDO "+i+" "+j+" "+r+" "+r2);
                             }
                         }catch(java.lang.ArrayIndexOutOfBoundsException e){
 
                         }catch(java.lang.NullPointerException e){
 
                         }
-                        //r2=(int) (Math.random()*30)+5;
+                        r2=(int)(Math.random()*(img.getHeight()/5*(sectores.get(d).y+1)))+(img.getHeight()/5*sectores.get(d).y);
                     }
-                //r=(int) (Math.random()*30)+5;
+                    r=(int)(Math.random()*(img.getWidth()/5*(sectores.get(d).x+1)))+(img.getWidth()/5*sectores.get(d).x);;
+                    if(false){
+                        System.out.println(d+" X: desde "+(img.getWidth()/5*sectores.get(d).x)+"  hasta:  "+(img.getWidth()/5*(sectores.get(d).x+1)));
+                        System.out.println(d+" Y: "+(img.getHeight()/5*sectores.get(d).y)+"  hasta:  "+(img.getHeight()/5*(sectores.get(d).y+1)));
+                    }
                 }
                 if(encontrado){
                     sectores.get(d).listo=true;
