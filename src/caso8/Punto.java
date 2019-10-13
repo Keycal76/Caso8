@@ -5,6 +5,7 @@
  */
 package caso8;
 
+import java.awt.Color;
 /**
  *
  * @author 1001001222
@@ -15,6 +16,7 @@ public class Punto {
     int R;
     int G;
     int B;
+    Color color;
     
     public Punto(int pX, int pY, int pR, int pG, int pB){
         x=pX;
@@ -22,5 +24,11 @@ public class Punto {
         R=pR;
         G=pG;
         B=pB;
+    }
+    
+    public Punto(int pX, int pY, Color pColor){
+        x=pX;
+        y=pY;
+        color=pColor;
     }
 }

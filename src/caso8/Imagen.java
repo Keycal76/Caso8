@@ -51,7 +51,7 @@ public class Imagen {
                 d=0;
                 salir=analizarSector();
             }
-            System.out.println(d+" "+sectores.get(d).listo+" "+sectores.get(d).posibilidad);
+            //System.out.println(d+" "+sectores.get(d).listo+" "+sectores.get(d).posibilidad);
             if(sectores.get(d).listo!=true){
                 boolean encontrado=false;
                 for(int i=img.getWidth()/5*sectores.get(d).x;i<img.getHeight()/5*(sectores.get(d).x+1);i+=10){//      -1?
@@ -90,7 +90,7 @@ public class Imagen {
         boolean resp=false;
         for(int i=0;i<sectores.size();i++){
             if(sectores.get(i).listo==false && sectores.get(i).posibilidad>0.1 && sectores.get(i).posibilidad<1){
-                System.out.println("HEREEEE "+i+" "+sectores.get(i).posibilidad);
+                //System.out.println("HEREEEE "+i+" "+sectores.get(i).posibilidad);
                 resp=true;
             }
         }
