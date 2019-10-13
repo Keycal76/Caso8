@@ -31,6 +31,7 @@ public class Sector {
     //9.MAGENTA
     //10.CYAN
     //11.BLUE
+    //12.Azul claro
     
     public Sector(int pX, int pY, int pPosibilidad){
         x=pX;
@@ -39,7 +40,6 @@ public class Sector {
         colores.add(Color.GRAY);
         colores.add(Color.LIGHT_GRAY);
         colores.add(Color.DARK_GRAY);
-        //colores.add(Color.BLACK);
         colores.add(Color.RED);
         colores.add(Color.PINK);
         colores.add(Color.ORANGE);
@@ -48,6 +48,10 @@ public class Sector {
         colores.add(Color.MAGENTA);
         colores.add(Color.CYAN);
         colores.add(Color.BLUE);
+        colores.add(new Color(60,100,160));//Azul claro
+        colores.add(new Color(100,70,50));//Cafe
+        colores.add(new Color(120,60,40));//Cafe claro
+        colores.add(new Color(230,220,115));//Amarillo piel
     }
     
     public void anadirPunto(int x, int y, int R, int G, int B){
