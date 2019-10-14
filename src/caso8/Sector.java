@@ -19,6 +19,7 @@ public class Sector {
     double posibilidad;
     boolean listo=false;
     ArrayList<Color> colores=new ArrayList<Color>();
+    boolean[] coloresHallados=new boolean[15];
     
     //1.GRAY
     //2.LIGHT_GRAY
@@ -32,6 +33,9 @@ public class Sector {
     //10.CYAN
     //11.BLUE
     //12.Azul claro
+    //13.Cafe
+    //14.Cafe claro
+    //15.Amarillo piel
     
     public Sector(int pX, int pY, int pPosibilidad){
         x=pX;
@@ -52,6 +56,9 @@ public class Sector {
         colores.add(new Color(100,70,50));//Cafe
         colores.add(new Color(120,60,40));//Cafe claro
         colores.add(new Color(230,220,115));//Amarillo piel
+        for(int i=0;i<coloresHallados.length;i++){
+            coloresHallados[i]=false;
+        }
     }
     
     public void anadirPunto(int x, int y, int R, int G, int B){
@@ -69,9 +76,12 @@ public class Sector {
             if(distanciaAux<distancia){
                 distancia=distanciaAux;
                 color=colores.get(i);
+                coloresHallados[i]=true;
             }
         }
-        //System.out.println(color);
+        /*for(int k=0;k<coloresHallados.length;k++){
+            System.out.println("HALLADO: "+k+"  "+coloresHallados[k]);
+        }*/
         return color;
     }
 }
