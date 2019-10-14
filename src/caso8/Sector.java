@@ -19,8 +19,10 @@ public class Sector {
     double posibilidad;
     boolean listo=false;
     ArrayList<Color> colores=new ArrayList<Color>();
-    boolean[] coloresHallados=new boolean[15];
+    double[] coloresHallados=new double[16];
     ArrayList<Figura> figuras=new ArrayList<Figura>();
+    double totalPintado;
+    //0.BLACK
     //1.GRAY
     //2.LIGHT_GRAY
     //3.DARK_GRAY
@@ -41,6 +43,7 @@ public class Sector {
         x=pX;
         y=pY;
         posibilidad=pPosibilidad;
+        colores.add(Color.BLACK);
         colores.add(Color.GRAY);
         colores.add(Color.LIGHT_GRAY);
         colores.add(Color.DARK_GRAY);
@@ -57,7 +60,7 @@ public class Sector {
         colores.add(new Color(120,60,40));//Cafe claro
         colores.add(new Color(230,220,115));//Amarillo piel
         for(int i=0;i<coloresHallados.length;i++){
-            coloresHallados[i]=false;
+            coloresHallados[i]=0;
         }
     }
     
@@ -67,6 +70,7 @@ public class Sector {
     
     public Color clasificarColor(int R, int G, int B){
         Color color=Color.BLACK;
+        int f=0;
         int distancia=(int)(Math.pow(R-color.getRed(),2)+Math.pow(G-color.getGreen(),2)+Math.pow(B-color.getBlue(),2));
         distancia=(int)Math.pow(distancia,0.5);
         //System.out.println("Distancia 1: "+distancia);
@@ -75,17 +79,36 @@ public class Sector {
             distanciaAux=(int)Math.pow(distanciaAux,0.5);
             if(distanciaAux<distancia){
                 distancia=distanciaAux;
+                f=i;
                 color=colores.get(i);
-                coloresHallados[i]=true;
             }
         }
+        coloresHallados[f]+=1;
         /*for(int k=0;k<coloresHallados.length;k++){
-            System.out.println("HALLADO: "+k+"  "+coloresHallados[k]);
+            System.out.println("HALLADO: "+colores.get(k).toString()+" "+k+"  "+coloresHallados[k]);
         }*/
         return color;
     }
     
     public void sacarFigurasIniciales(){
+        double total=0;
+        double totalPuntos=0;
+        for(int k=0;k<coloresHallados.length;k++){
+            totalPuntos+=coloresHallados[k];
+            System.out.println("PUNTOS "+k+":"+coloresHallados[k]);
+            coloresHallados[k]=(coloresHallados[k]/(204*204))*100;
+            total+=coloresHallados[k];
+        }
+        if(total>100){
+            
+        }
+        System.out.println("TOTAL: "+total);
+        System.out.println("TOTAL PUNTOS: "+totalPuntos);
+        System.out.println("TOTAL PUNTOS 2: "+puntos.size());
+        System.out.println("                              ");
+    }
+    
+    public void recibirFigurasIniciales(){
         
     }
     

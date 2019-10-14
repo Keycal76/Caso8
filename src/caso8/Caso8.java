@@ -57,12 +57,18 @@ public class Caso8 extends Frame implements ActionListener{
         super.paintComponents(g);
         for(int d=0;d<25;d++){
             for(int i=0;i<imagenes.get(0).sectores.get(d).puntos.size();i++){
-                g.setColor(imagenes.get(0).sectores.get(d).puntos.get(i).color);
-                g.drawRect(imagenes.get(0).sectores.get(d).puntos.get(i).x*500/1024, imagenes.get(0).sectores.get(d).puntos.get(i).y*500/1024, 1, 1);
-                //System.out.println("IMPRIMIENDO "+puntos.get(i).x*800/ancho+" "+puntos.get(i).y*800/largo);
+                //if(d==14){
+                    g.setColor(imagenes.get(0).sectores.get(d).puntos.get(i).color);
+                    g.drawRect(imagenes.get(0).sectores.get(d).puntos.get(i).x*500/1024, imagenes.get(0).sectores.get(d).puntos.get(i).y*500/1024, 1, 1);
+                //}
+                //g.drawRect(imagenes.get(0).sectores.get(d).puntos.get(i).x, imagenes.get(0).sectores.get(d).puntos.get(i).y, 1, 1);
             }
         }
         g.setColor(Color.BLACK);
+        /*for(int i=0;i<1025;i+=204){
+            g.drawLine(i, 0, i, 1024); 
+            g.drawLine(0, i, 1024, i); 
+        }*/
         for(int i=0;i<600;i+=100){
             g.drawLine(i, 0, i, 500); 
             g.drawLine(0, i, 500, i); 

@@ -37,8 +37,8 @@ public class Imagen {
         int R=0;
         int G=0;
         int B=0;
-        for(int sectorX=0;sectorX<5;sectorX++){
-            for(int sectorY=0;sectorY<5;sectorY++){
+        for(int sectorY=0;sectorY<5;sectorY++){
+            for(int sectorX=0;sectorX<5;sectorX++){
                 sectores.add(new Sector(sectorX, sectorY,1));
             }
         }
@@ -75,12 +75,14 @@ public class Imagen {
                         }catch(java.lang.NullPointerException e){
 
                         }
-                        r2=(int)(Math.random()*(img.getHeight()/5*(sectores.get(d).y+1)))+(img.getHeight()/5*sectores.get(d).y);
+                        r2=(int)(Math.random()*204)+(204*sectores.get(d).y);
                     }
-                    r=(int)(Math.random()*(img.getWidth()/5*(sectores.get(d).x+1)))+(img.getWidth()/5*sectores.get(d).x);;
+                    r=(int)(Math.random()*204)+(204*sectores.get(d).x);
                     if(false){
-                        System.out.println(d+" X: desde "+(img.getWidth()/5*sectores.get(d).x)+"  hasta:  "+(img.getWidth()/5*(sectores.get(d).x+1)));
-                        System.out.println(d+" Y: "+(img.getHeight()/5*sectores.get(d).y)+"  hasta:  "+(img.getHeight()/5*(sectores.get(d).y+1)));
+                        System.out.println(d+" X: desde "+(img.getWidth()/5*sectores.get(d).x)+"  hasta:  "+(img.getWidth()/5*(sectores.get(d).x+1))+" R: "+r);
+                        System.out.println(d+" Y: desde "+(img.getHeight()/5*sectores.get(d).y)+"  hasta:  "+(img.getHeight()/5*(sectores.get(d).y+1))+" R: "+r2);
+                        
+                        System.out.println("  ");
                     }
                 }
                 if(encontrado){
@@ -88,6 +90,9 @@ public class Imagen {
                 }else{
                     sectores.get(d).posibilidad-=0.2;
                 }
+            }
+            if(d==8){
+                sectores.get(d).sacarFigurasIniciales();
             }
             d++;
         }
