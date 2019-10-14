@@ -10,19 +10,17 @@ import java.awt.Color;
  *
  * @author 1001001222
  */
-public class Punto {
-    int x;
-    int y;
+class Figura {
+    Punto punto1;
+    Punto punto2;
+    Punto punto3;
     Color color;
     
-    public Punto(int pX, int pY){
-        x=pX;
-        y=pY;
-    }
-    
-    public Punto(int pX, int pY, Color pColor){
-        x=pX;
-        y=pY;
+    public Figura(Punto p1, Punto p2, Punto p3, Color pColor){
+        punto1=p1;
+        punto2=p2;
+        punto3=p3;
         color=pColor;
+        //Cromosoma
     }
 }

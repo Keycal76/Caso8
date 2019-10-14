@@ -20,7 +20,7 @@ public class Sector {
     boolean listo=false;
     ArrayList<Color> colores=new ArrayList<Color>();
     boolean[] coloresHallados=new boolean[15];
-    
+    ArrayList<Figura> figuras=new ArrayList<Figura>();
     //1.GRAY
     //2.LIGHT_GRAY
     //3.DARK_GRAY
@@ -83,5 +83,13 @@ public class Sector {
             System.out.println("HALLADO: "+k+"  "+coloresHallados[k]);
         }*/
         return color;
+    }
+    
+    public void sacarFigurasIniciales(){
+        
+    }
+    
+    public void algotirmoGenetico(){
+        
     }
 }
