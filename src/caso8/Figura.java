@@ -21,6 +21,6 @@ class Figura {
         punto2=p2;
         punto3=p3;
         color=pColor;
-        //Cromosoma
+        byte[] Cromosoma=new byte[3];
     }
 }

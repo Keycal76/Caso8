@@ -99,13 +99,14 @@ public class Sector {
             coloresHallados[k]=(coloresHallados[k]/(204*204))*100;
             total+=coloresHallados[k];
         }
-        if(total>100){
-            
-        }
         System.out.println("TOTAL: "+total);
         System.out.println("TOTAL PUNTOS: "+totalPuntos);
         System.out.println("TOTAL PUNTOS 2: "+puntos.size());
         System.out.println("                              ");
+    }
+    
+    public void crearFigurasIniciales(){
+        
     }
     
     public void recibirFigurasIniciales(){
