@@ -181,6 +181,7 @@ public class Sector {
                 temp2+=(int)(puntosYHallados.get(k)[i]/100*255);
             }
         }
+        //puntos.clear();//---------------------------------------------------------------------------------------------------
         crearFigurasIniciales();
     }
     
@@ -193,11 +194,22 @@ public class Sector {
         
     }
     
-    public void algotirmoGenetico(){
-        
+    public void algoritmoGenetico(){
+        while(evaluar()){
+            for(int i=0;i<figuras.size();i++){
+                
+            }
+        }
     }
     
-    private void fitness(){
-        
+    private boolean fitness(){
+        boolean sirve=false;
+        return sirve;
+    }
+    
+    private boolean evaluar(){
+        boolean isFinal=false;
+        //Margen de error de.... 2%?
+        return isFinal;
     }
 }
