@@ -20,6 +20,8 @@ public class Sector {
     boolean listo=false;
     ArrayList<Color> colores=new ArrayList<Color>();
     double[] coloresHallados=new double[16];
+    ArrayList<double[]> puntosXHallados=new ArrayList<double[]>();
+    ArrayList<double[]> puntosYHallados=new ArrayList<double[]>();
     ArrayList<Figura> figuras=new ArrayList<Figura>();
     double totalPintado;
     //0.BLACK
@@ -61,6 +63,14 @@ public class Sector {
         colores.add(new Color(230,220,115));//Amarillo piel
         for(int i=0;i<coloresHallados.length;i++){
             coloresHallados[i]=0;
+            puntosXHallados.add(new double[205]);
+            puntosYHallados.add(new double[205]);
+        }
+        for(int i=0;i<puntosXHallados.size();i++){
+            for(int j=0;j<puntosXHallados.get(i).length;j++){
+                puntosXHallados.get(i)[j]=0;
+                puntosYHallados.get(i)[j]=0;
+            }
         }
     }
     
@@ -90,19 +100,36 @@ public class Sector {
         return color;
     }
     
-    public void sacarFigurasIniciales(){
+    public void sacarInformacionInicial(){
         double total=0;
         double totalPuntos=0;
         for(int k=0;k<coloresHallados.length;k++){
             totalPuntos+=coloresHallados[k];
-            System.out.println("PUNTOS "+k+":"+coloresHallados[k]);
             coloresHallados[k]=(coloresHallados[k]/(204*204))*100;
+            //System.out.println("PUNTOS "+k+":"+coloresHallados[k]);
             total+=coloresHallados[k];
         }
-        System.out.println("TOTAL: "+total);
+        /*System.out.println("TOTAL: "+total);
         System.out.println("TOTAL PUNTOS: "+totalPuntos);
         System.out.println("TOTAL PUNTOS 2: "+puntos.size());
-        System.out.println("                              ");
+        System.out.println("                              ");*/
+        for(int k=0;k<puntosXHallados.size();k++){
+            for(int i=0;i<puntos.size();i++){
+                if(puntos.get(i).color.equals(colores.get(k))){
+                    try{
+                    puntosXHallados.get(k)[puntos.get(i).x-(this.x*204)]+=1;
+                    puntosYHallados.get(k)[puntos.get(i).y-(this.y*204)]+=1;
+                    } catch(ArrayIndexOutOfBoundsException e){
+
+                    }
+                }
+            }
+            for(int i=0;i<puntosXHallados.get(k).length;i++){
+                puntosXHallados.get(k)[i]=puntosXHallados.get(k)[i]/puntos.size();
+                puntosYHallados.get(k)[i]=puntosYHallados.get(k)[i]/puntos.size();
+                //System.out.println("Color: "+k+"   "+i+"  X: "+puntosXHallados.get(k)[i]+" Y: "+puntosYHallados.get(k)[i]);
+            }
+        }
     }
     
     public void crearFigurasIniciales(){

@@ -91,8 +91,8 @@ public class Imagen {
                     sectores.get(d).posibilidad-=0.2;
                 }
             }
-            if(d==8){
-                sectores.get(d).sacarFigurasIniciales();
+            if(d==2){
+                sectores.get(d).sacarInformacionInicial();
             }
             d++;
         }
