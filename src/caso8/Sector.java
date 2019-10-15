@@ -393,23 +393,37 @@ public class Sector extends Frame{
         for(int i=0;i<3;i++){
             String b1=binario(figuras.get(x1).Cromosoma[i]);
             String b2=binario(figuras.get(x2).Cromosoma[i]);
-            int r=(int)(Math.random()*3);
-            String nuevo=b1.substring(0, 3+r)+b2.substring(3+r, b2.length());
+            int r=(int)(Math.random()*4);
+            String nuevo=b1.substring(0, 2+r)+b2.substring(2+r, b2.length());
             String nuevo2=b2.substring(0, 3+r)+b1.substring(3+r, b1.length());
             cromo[i]=(int)Long.parseLong(nuevo, 2);
             cromo2[i]=(int)Long.parseLong(nuevo2, 2);
+            int m=(int)(Math.random()*30);
+            if(m==1){
+                nuevo2=mutacion(nuevo2);
+            }
         }
         figuras.add(new Figura(cromo[0],cromo[1],cromo[2]));
         figuras.add(new Figura(cromo2[0],cromo2[1],cromo2[2]));
         if(figuras.size()<4000){
-            figuras.add(new Figura(cromo[0],cromo[1],cromo[2]));
-            figuras.add(new Figura(cromo2[0],cromo2[1],cromo2[2]));
+            figuras.add(new Figura(cromo[0],cromo2[1],cromo[2]));
+            figuras.add(new Figura(cromo2[0],cromo[1],cromo2[2]));
         }
     }
     
     private void cruce(int x1){
         System.out.println("Cruce simple");
         figuras.add(new Figura(figuras.get(x1).Cromosoma[0],figuras.get(x1).Cromosoma[1],figuras.get(x1).Cromosoma[2]));
+    }
+    
+    private String mutacion(String binario){
+        int r=(int)(Math.random()*6)+1;
+        if(binario.substring(r-1,r).equals("1")){
+            binario=binario.substring(0,r-1)+"0"+binario.substring(r+1,binario.length());
+        }else{
+            binario=binario.substring(0,r-1)+"1"+binario.substring(r+1,binario.length());
+        }
+        return binario;
     }
     
     public void imprimirFiguras(){
