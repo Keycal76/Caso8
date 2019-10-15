@@ -24,6 +24,10 @@ public class Sector {
     ArrayList<double[]> puntosYHallados=new ArrayList<double[]>();
     ArrayList<Figura> figuras=new ArrayList<Figura>();
     double totalPintado;
+    
+    int[] targetColor=new int[16];
+    ArrayList<int[]> targetX=new ArrayList<int[]>();
+    ArrayList<int[]> targetY=new ArrayList<int[]>();
     //0.BLACK
     //1.GRAY
     //2.LIGHT_GRAY
@@ -65,11 +69,15 @@ public class Sector {
             coloresHallados[i]=0;
             puntosXHallados.add(new double[205]);
             puntosYHallados.add(new double[205]);
+            targetX.add(new int[205]);
+            targetY.add(new int[205]);
         }
         for(int i=0;i<puntosXHallados.size();i++){
             for(int j=0;j<puntosXHallados.get(i).length;j++){
                 puntosXHallados.get(i)[j]=0;
                 puntosYHallados.get(i)[j]=0;
+                targetX.get(i)[j]=0;
+                targetY.get(i)[j]=0;
             }
         }
     }
@@ -109,6 +117,10 @@ public class Sector {
             //System.out.println("PUNTOS "+k+":"+coloresHallados[k]);
             total+=coloresHallados[k];
         }
+        for(int k=0;k<coloresHallados.length;k++){
+            coloresHallados[k]=(coloresHallados[k]/total)*100;
+            System.out.println("PUNTOS "+k+":"+coloresHallados[k]);
+        }
         /*System.out.println("TOTAL: "+total);
         System.out.println("TOTAL PUNTOS: "+totalPuntos);
         System.out.println("TOTAL PUNTOS 2: "+puntos.size());
@@ -126,15 +138,20 @@ public class Sector {
                     }
                 }
             }
-            System.out.println(temp);
+            //System.out.println(temp);
             for(int i=0;i<puntosXHallados.get(k).length;i++){
                 if(temp>0){
                     puntosXHallados.get(k)[i]=puntosXHallados.get(k)[i]/temp*100;
                     puntosYHallados.get(k)[i]=puntosYHallados.get(k)[i]/temp*100;
-                    System.out.println("Color: "+k+"   "+i+"  X: "+puntosXHallados.get(k)[i]+" Y: "+puntosYHallados.get(k)[i]);
+                    //System.out.println("Color: "+k+"   "+i+"  X: "+puntosXHallados.get(k)[i]+" Y: "+puntosYHallados.get(k)[i]);
                 }
             }
         }
+        crearRepresentacion();
+    }
+    
+    private void crearRepresentacion(){
+        
     }
     
     public void crearFigurasIniciales(){
