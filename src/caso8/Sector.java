@@ -174,17 +174,19 @@ public class Sector {
                     targetX.get(k)[i]=temp+(int)(puntosXHallados.get(k)[i]/100*255);
                     targetY.get(k)[i]=temp2+(int)(puntosYHallados.get(k)[i]/100*255);
                 }
-                System.out.println(k+" X: "+i+" Desde "+temp+" hasta "+targetX.get(k)[i]);
-                System.out.println(k+" Y: "+i+" Desde "+temp2+" hasta "+targetY.get(k)[i]);
-                System.out.println("            ");
+                //System.out.println(k+" X: "+i+" Desde "+temp+" hasta "+targetX.get(k)[i]);
+                //System.out.println(k+" Y: "+i+" Desde "+temp2+" hasta "+targetY.get(k)[i]);
+                //System.out.println("            ");
                 temp+=(int)(puntosXHallados.get(k)[i]/100*255);
                 temp2+=(int)(puntosYHallados.get(k)[i]/100*255);
             }
         }
+        crearFigurasIniciales();
     }
     
     public void crearFigurasIniciales(){
-        
+        figuras.add(new Figura((int)(Math.random()*255),(int)(Math.random()*255),(int)(Math.random()*255)));
+        figuras.add(new Figura((int)(Math.random()*255),(int)(Math.random()*255),(int)(Math.random()*255)));
     }
     
     public void recibirFigurasIniciales(){
@@ -192,6 +194,10 @@ public class Sector {
     }
     
     public void algotirmoGenetico(){
+        
+    }
+    
+    private void fitness(){
         
     }
 }

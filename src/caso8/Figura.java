@@ -15,13 +15,15 @@ class Figura {
     Punto punto2;
     Punto punto3;
     Color color;
-    byte[] Cromosoma=new byte[3];
+    int[] Cromosoma=new int[3];
     
-    public Figura(byte C1, byte C2, byte C3){
+    public Figura(int C1, int C2, int C3){
         Cromosoma[0]=C1;
         Cromosoma[1]=C2;
         Cromosoma[2]=C3;
-        byte e=(byte)256;
+        System.out.println(Cromosoma[0]);
+        System.out.println(Cromosoma[1]);
+        System.out.println(Cromosoma[2]);
     }
     
     public void setDatos(Punto p1, Punto p2, Punto p3, Color pColor){
