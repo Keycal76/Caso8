@@ -114,20 +114,25 @@ public class Sector {
         System.out.println("TOTAL PUNTOS 2: "+puntos.size());
         System.out.println("                              ");*/
         for(int k=0;k<puntosXHallados.size();k++){
+            int temp=0;
             for(int i=0;i<puntos.size();i++){
                 if(puntos.get(i).color.equals(colores.get(k))){
                     try{
                     puntosXHallados.get(k)[puntos.get(i).x-(this.x*204)]+=1;
                     puntosYHallados.get(k)[puntos.get(i).y-(this.y*204)]+=1;
+                    temp++;
                     } catch(ArrayIndexOutOfBoundsException e){
 
                     }
                 }
             }
+            System.out.println(temp);
             for(int i=0;i<puntosXHallados.get(k).length;i++){
-                puntosXHallados.get(k)[i]=puntosXHallados.get(k)[i]/puntos.size();
-                puntosYHallados.get(k)[i]=puntosYHallados.get(k)[i]/puntos.size();
-                //System.out.println("Color: "+k+"   "+i+"  X: "+puntosXHallados.get(k)[i]+" Y: "+puntosYHallados.get(k)[i]);
+                if(temp>0){
+                    puntosXHallados.get(k)[i]=puntosXHallados.get(k)[i]/temp*100;
+                    puntosYHallados.get(k)[i]=puntosYHallados.get(k)[i]/temp*100;
+                    System.out.println("Color: "+k+"   "+i+"  X: "+puntosXHallados.get(k)[i]+" Y: "+puntosYHallados.get(k)[i]);
+                }
             }
         }
     }
