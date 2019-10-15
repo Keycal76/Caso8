@@ -166,9 +166,7 @@ public class Sector {
             for(int i=0;i<puntos.size();i++){
                 if(puntos.get(i).color.equals(colores.get(k))){
                     try{
-                    puntosXHallados.get(k)[puntos.get(i).x-(this.x*204)]+=1;
-                    puntosYHallados.get(k)[puntos.get(i).y-(this.y*204)]+=1;
-                    temp2++;
+                        
                     } catch(ArrayIndexOutOfBoundsException e){
 
                     }
