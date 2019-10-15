@@ -196,10 +196,14 @@ public class Sector {
     
     public void algoritmoGenetico(){
         while(evaluar()){
+            int[] temp=new int[figuras.size()];//Temporal para guardar los que van a cruzarse
             for(int i=0;i<figuras.size();i++){
                 
             }
-        }
+            for(int i=0;i<temp.length/2;i++){
+                
+            }
+        }//RECORDAR TENER TAMAÑO LIMITE PARA QUE LUEGO EN VEZ DE SER 4 HIJOS SEAN 2
     }
     
     private boolean fitness(){
@@ -211,5 +215,15 @@ public class Sector {
         boolean isFinal=false;
         //Margen de error de.... 2%?
         return isFinal;
+    }
+    
+    private void cruce(int x1, int x2){
+        //Validar si solo es uno o sí queda impar, para que se divida?
+        //RECORDAR TENER TAMAÑO LIMITE PARA QUE LUEGO EN VEZ DE SER 4 HIJOS SEAN 2
+    }
+    
+    private void cruce(int x1){
+        //YA NO xd Validar si solo es uno o sí queda impar, para que se divida?
+        //RECORDAR TENER TAMAÑO LIMITE PARA QUE LUEGO EN VEZ DE SER 4 HIJOS SEAN 2
     }
 }
