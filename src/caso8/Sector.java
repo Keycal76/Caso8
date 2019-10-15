@@ -119,7 +119,7 @@ public class Sector {
         }
         for(int k=0;k<coloresHallados.length;k++){
             coloresHallados[k]=(coloresHallados[k]/total)*100;
-            System.out.println("PUNTOS "+k+":"+coloresHallados[k]);
+            //System.out.println("PUNTOS "+k+":"+coloresHallados[k]);
         }
         /*System.out.println("TOTAL: "+total);
         System.out.println("TOTAL PUNTOS: "+totalPuntos);
@@ -151,7 +151,35 @@ public class Sector {
     }
     
     private void crearRepresentacion(){
-        
+        int temp=0;
+        for(int k=0;k<coloresHallados.length;k++){
+            if(k+1==coloresHallados.length){
+                targetColor[k]=255;
+            }else{
+                targetColor[k]=temp+(int)(coloresHallados[k]/100*255);//Guarda la dirección donde empieza el intervalo
+            }
+            System.out.println(k+" Desde "+temp+" hasta "+targetColor[k]);
+            temp+=(int)(coloresHallados[k]/100*255);
+        }
+        for(int k=0;k<puntosXHallados.size();k++){
+            int temp2=0;
+            for(int i=0;i<puntos.size();i++){
+                if(puntos.get(i).color.equals(colores.get(k))){
+                    try{
+                    puntosXHallados.get(k)[puntos.get(i).x-(this.x*204)]+=1;
+                    puntosYHallados.get(k)[puntos.get(i).y-(this.y*204)]+=1;
+                    temp2++;
+                    } catch(ArrayIndexOutOfBoundsException e){
+
+                    }
+                }
+            }
+            //System.out.println(temp);
+            for(int i=0;i<puntosXHallados.get(k).length;i++){
+                if(temp2>0){
+                }
+            }
+        }
     }
     
     public void crearFigurasIniciales(){
