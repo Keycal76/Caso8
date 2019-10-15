@@ -7,12 +7,14 @@ package caso8;
 
 import java.util.ArrayList;
 import java.awt.Color;
+import java.awt.Frame;
+import java.awt.Graphics;
 
 /**
  *
  * @author 1001001222
  */
-public class Sector {
+public class Sector extends Frame{
     public ArrayList<Punto> puntos=new ArrayList<Punto>();
     int x;
     int y;
@@ -214,6 +216,8 @@ public class Sector {
                     cruce(temp[i]);
                 }
             }
+            eliminar(temp);
+            imprimirFiguras();
         }//RECORDAR TENER TAMAÑO LIMITE PARA QUE LUEGO EN VEZ DE SER 4 HIJOS SEAN 2
     }
     
@@ -376,38 +380,88 @@ public class Sector {
         return binario;
     }
     
-    private void cruce(int x1, int x2){
-        if(x2<x1){
-            int t=x1;
-            x1=x2;
-            x2=t;
+    private void eliminar(int[] borrar){
+        for(int i=0;i<borrar.length;i++){
+            figuras.remove(borrar[i]-i);
         }
+    }
+    
+    private void cruce(int x1, int x2){
+        //System.out.println("Cruce doble");
         int[] cromo=new int[3];
         int[] cromo2=new int[3];
         for(int i=0;i<3;i++){
             String b1=binario(figuras.get(x1).Cromosoma[i]);
-            String b2=binario(figuras.get(x1).Cromosoma[i]);
-            int r=(int)(Math.random()*2);
-            String nuevo=b1.substring(0, 3+r)+b1.substring(3+r, b2.length());
-            String nuevo2=b2.substring(0, 3+r)+b2.substring(3+r, b1.length());
+            String b2=binario(figuras.get(x2).Cromosoma[i]);
+            int r=(int)(Math.random()*3);
+            String nuevo=b1.substring(0, 3+r)+b2.substring(3+r, b2.length());
+            String nuevo2=b2.substring(0, 3+r)+b1.substring(3+r, b1.length());
             cromo[i]=(int)Long.parseLong(nuevo, 2);
             cromo2[i]=(int)Long.parseLong(nuevo2, 2);
         }
-        figuras.remove(x1);
-        figuras.remove(x2-1);
         figuras.add(new Figura(cromo[0],cromo[1],cromo[2]));
         figuras.add(new Figura(cromo2[0],cromo2[1],cromo2[2]));
-        if(figuras.size()>4000){
+        if(figuras.size()<4000){
             figuras.add(new Figura(cromo[0],cromo[1],cromo[2]));
             figuras.add(new Figura(cromo2[0],cromo2[1],cromo2[2]));
         }
     }
     
     private void cruce(int x1){
+        System.out.println("Cruce simple");
         figuras.add(new Figura(figuras.get(x1).Cromosoma[0],figuras.get(x1).Cromosoma[1],figuras.get(x1).Cromosoma[2]));
     }
     
     public void imprimirFiguras(){
-        
+        for(int i=0;i<figuras.size();i++){
+            boolean hallado=false;
+            int tempC=0;
+            for(int j=0;j<targetColor.length;j++){
+                //System.out.println(figuras.get(i).Cromosoma[0]);
+                if(targetColor[j]>figuras.get(i).Cromosoma[0] && hallado==false){
+                    hallado=true;
+                    tempC=j-1;
+                }
+            }
+            if(hallado==false){
+                tempC=targetColor.length;
+            }
+            figuras.get(i).color=colores.get(tempC);
+            //System.out.println(colores.get(tempC));
+            boolean halladoX=false;
+            int tempX=0;
+            boolean halladoY=false;
+            int tempY=0;
+            for(int j=0;j<targetX.get(tempC).length;j++){
+                if(targetX.get(tempC)[j]>figuras.get(i).Cromosoma[1] && halladoX==false){
+                    halladoX=true;
+                    tempX=j-1;
+                }
+                if(targetY.get(tempC)[j]>figuras.get(i).Cromosoma[1] && halladoY==false){
+                    halladoY=true;
+                    tempY=j-1;
+                }
+            }
+            if(halladoX==false){
+                tempX=targetX.get(tempC).length;
+            }
+            if(halladoY==false){
+                tempY=targetY.get(tempC).length;
+            }
+            figuras.get(i).x=targetX.get(tempC)[tempX];
+            figuras.get(i).y=targetY.get(tempC)[tempY];
+        }
+        paint(this.vista.panelImagen.getGraphics());
+    }
+    
+    public void paint(Graphics g){
+        super.paintComponents(g);
+        g.setColor(Color.WHITE);
+        g.fillRect(0, 0, 1000, 1000);
+        for(int i=0;i<figuras.size();i++){
+            //System.out.println("HERE "+i+" x "+figuras.get(i).x+" y "+figuras.get(i).y+" C "+figuras.get(i).color);
+            g.setColor(figuras.get(i).color);
+            g.drawOval(figuras.get(i).x+(this.x*204), figuras.get(i).y+(this.y*204), 2, 2);
+        }
     }
 }
