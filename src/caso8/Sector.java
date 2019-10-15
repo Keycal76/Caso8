@@ -18,6 +18,7 @@ public class Sector {
     int y;
     double posibilidad;
     boolean listo=false;
+    public Ventana vista;
     ArrayList<Color> colores=new ArrayList<Color>();
     double[] coloresHallados=new double[16];
     ArrayList<double[]> puntosXHallados=new ArrayList<double[]>();
@@ -45,9 +46,10 @@ public class Sector {
     //14.Cafe claro
     //15.Amarillo piel
     
-    public Sector(int pX, int pY, int pPosibilidad){
+    public Sector(int pX, int pY, int pPosibilidad, Ventana pVista){
         x=pX;
         y=pY;
+        vista=pVista;
         posibilidad=pPosibilidad;
         colores.add(Color.BLACK);
         colores.add(Color.GRAY);
@@ -109,7 +111,6 @@ public class Sector {
     }
     
     public void sacarInformacionInicial(){
-        System.out.println("HEREEEEEEEE2");
         double total=0;
         double totalPuntos=0;
         for(int k=0;k<coloresHallados.length;k++){
@@ -188,6 +189,7 @@ public class Sector {
     public void crearFigurasIniciales(){
         figuras.add(new Figura((int)(Math.random()*255),(int)(Math.random()*255),(int)(Math.random()*255)));
         figuras.add(new Figura((int)(Math.random()*255),(int)(Math.random()*255),(int)(Math.random()*255)));
+        algoritmoGenetico();
     }
     
     public void recibirFigurasIniciales(){
@@ -195,35 +197,217 @@ public class Sector {
     }
     
     public void algoritmoGenetico(){
-        while(evaluar()){
+        while(!evaluar()){
+            System.out.println("Tamaño: "+figuras.size());
             int[] temp=new int[figuras.size()];//Temporal para guardar los que van a cruzarse
+            int aux=0;
             for(int i=0;i<figuras.size();i++){
-                
+                if(!fitness(i)){
+                    temp[aux]=i;
+                    aux++;
+                }
             }
-            for(int i=0;i<temp.length/2;i++){
-                
+            for(int i=0;i<temp.length;i+=2){
+                try{
+                    cruce(temp[i], temp[i+1]);
+                }catch(java.lang.ArrayIndexOutOfBoundsException e){
+                    cruce(temp[i]);
+                }
             }
         }//RECORDAR TENER TAMAÑO LIMITE PARA QUE LUEGO EN VEZ DE SER 4 HIJOS SEAN 2
     }
     
-    private boolean fitness(){
+    private boolean fitness(int x){
         boolean sirve=false;
+        for(int i=0;i<figuras.size();i++){
+            
+        }
         return sirve;
     }
     
     private boolean evaluar(){
         boolean isFinal=false;
+        double[] tempColores=new double[16];//Inicializar en 0?
+        ArrayList<double[]> temporalX=new ArrayList<double[]>();
+        ArrayList<double[]> temporalY=new ArrayList<double[]>();
+        for(int k=0;k<16;k++){
+            temporalX.add(new double[205]);
+            temporalY.add(new double[205]);
+        }
+        for(int k=0;k<temporalX.size();k++){
+            for(int k2=0;k2<temporalX.get(k).length;k2++){
+                temporalX.get(k)[k2]=0;
+                temporalY.get(k)[k2]=0;
+            }
+        }
+            
+        for(int i=0;i<figuras.size();i++){
+            boolean hallado=false;
+            int tempC=0;
+            for(int j=0;j<targetColor.length;j++){
+                if(targetColor[j]>figuras.get(i).Cromosoma[0] && hallado==false){
+                    hallado=true;
+                    tempC=j-1;
+                    tempColores[j-1]+=1;
+                }
+            }
+            if(hallado==false){
+                tempC=targetColor.length;
+                tempColores[targetColor.length]+=1;
+            }
+            //System.out.println("ES: "+figuras.get(i).Cromosoma[0]+" Mayor a "+targetColor[tempC]+" por si acaso "+targetColor[tempC+1]);
+            //System.out.println("ES: "+tempColores[]);
+            
+            boolean halladoX=false;
+            int tempX=0;
+            boolean halladoY=false;
+            int tempY=0;
+            for(int j=0;j<targetX.get(tempC).length;j++){
+                if(targetX.get(tempC)[j]>figuras.get(i).Cromosoma[1] && halladoX==false){
+                    halladoX=true;
+                    tempX=j-1;
+                    temporalX.get(tempC)[j-1]+=1;
+                }
+                if(targetY.get(tempC)[j]>figuras.get(i).Cromosoma[1] && halladoY==false){
+                    halladoY=true;
+                    tempY=j-1;
+                    temporalY.get(tempC)[j-1]+=1;
+                }
+            }
+            if(halladoX==false){
+                tempX=targetX.get(tempC).length;
+                temporalX.get(tempC)[tempX]+=1;
+            }
+            if(halladoY==false){
+                tempY=targetY.get(tempC).length;
+                temporalY.get(tempC)[tempY]+=1;
+            }
+        }
         //Margen de error de.... 2%?
+        comparar(tempColores, temporalX, temporalY);
         return isFinal;
     }
     
+    private boolean comparar(double[] tempColores, ArrayList<double[]> temporalX, ArrayList<double[]> temporalY){
+        boolean isCorrect=true;
+        double total=0;
+        for(int k=0;k<tempColores.length;k++){
+            //tempColores[k]=(tempColores[k]/(tempColores.length))*100;
+            //System.out.println("PUNTOsssssS "+k+":"+tempColores[k]);
+            total+=tempColores[k];
+        }
+        for(int k=0;k<tempColores.length;k++){
+            tempColores[k]=(tempColores[k]/total)*100;
+            //System.out.println("PUNTOS "+k+":"+tempColores[k]);
+        }
+        /*System.out.println("TOTAL: "+total);
+        System.out.println("TOTAL PUNTOS: "+totalPuntos);
+        System.out.println("TOTAL PUNTOS 2: "+figuras.size());
+        System.out.println("                              ");*/
+        double tempX=0;
+        double tempY=0;
+        for(int k=0;k<temporalX.size();k++){
+            tempX=0;
+            tempY=0;
+            for(int i=0;i<temporalX.get(k).length;i++){
+                tempX+=temporalX.get(k)[i];
+                tempY+=temporalY.get(k)[i];
+            }
+            //System.out.println(temp);
+            for(int i=0;i<temporalX.get(k).length;i++){
+                if(tempX!=0){
+                    temporalX.get(k)[i]=(temporalX.get(k)[i]/tempX)*100;
+                }
+                if(tempY!=0){
+                    temporalY.get(k)[i]=(temporalY.get(k)[i]/tempY)*100;
+                }
+                /*if(temporalX.get(k)[i]!=0){
+                    System.out.println("X: "+k+" "+i+" Porcentaje: "+temporalX.get(k)[i]);
+                }
+                if(temporalY.get(k)[i]!=0){
+                    System.out.println("Y: "+k+" "+i+" Porcentaje: "+temporalY.get(k)[i]);
+                }*/
+            }
+        }
+        
+        //coloresHallados
+        //puntosX/YHallados
+        for(int k=0;k<tempColores.length;k++){
+            if(tempColores[k]>(coloresHallados[k]-coloresHallados[k]*0.25) && tempColores[k]<(coloresHallados[k]+coloresHallados[k]*0.25)){
+                //isCorrect=true;
+            }else{
+                isCorrect=false;
+            }
+        }
+        for(int k=0;k<temporalX.size();k++){
+            tempX=0;
+            tempY=0;
+            for(int i=0;i<temporalX.get(k).length;i++){
+                if(temporalX.get(k)[i]>(puntosXHallados.get(k)[i]-puntosXHallados.get(k)[i]*0.25) && temporalX.get(k)[i]>(puntosXHallados.get(k)[i]+puntosXHallados.get(k)[i]*0.25)){
+                //isCorrect=true;
+                }else{
+                    isCorrect=false;
+                }
+                if(temporalY.get(k)[i]>(puntosYHallados.get(k)[i]-puntosYHallados.get(k)[i]*0.25) && temporalY.get(k)[i]>(puntosYHallados.get(k)[i]+puntosYHallados.get(k)[i]*0.25)){
+                //isCorrect=true;
+                }else{
+                    isCorrect=false;
+                }
+            }
+        }
+        return isCorrect;
+    }
+    
+    private String binario(int numero){
+        String binario="";
+        while(numero>0){
+             if(numero % 2 == 0) {
+                binario="0"+binario;
+            }else{
+                binario= "1"+binario;
+      //System.out.println("NUM: "+numero);
+            }
+            numero=(int)numero/2;
+        }
+        while(binario.length()<8){
+            binario="0"+binario;
+        }
+        //System.out.println("BINARIO: "+binario);
+        return binario;
+    }
+    
     private void cruce(int x1, int x2){
-        //Validar si solo es uno o sí queda impar, para que se divida?
-        //RECORDAR TENER TAMAÑO LIMITE PARA QUE LUEGO EN VEZ DE SER 4 HIJOS SEAN 2
+        if(x2<x1){
+            int t=x1;
+            x1=x2;
+            x2=t;
+        }
+        int[] cromo=new int[3];
+        int[] cromo2=new int[3];
+        for(int i=0;i<3;i++){
+            String b1=binario(figuras.get(x1).Cromosoma[i]);
+            String b2=binario(figuras.get(x1).Cromosoma[i]);
+            int r=(int)(Math.random()*2);
+            String nuevo=b1.substring(0, 3+r)+b1.substring(3+r, b2.length());
+            String nuevo2=b2.substring(0, 3+r)+b2.substring(3+r, b1.length());
+            cromo[i]=(int)Long.parseLong(nuevo, 2);
+            cromo2[i]=(int)Long.parseLong(nuevo2, 2);
+        }
+        figuras.remove(x1);
+        figuras.remove(x2-1);
+        figuras.add(new Figura(cromo[0],cromo[1],cromo[2]));
+        figuras.add(new Figura(cromo2[0],cromo2[1],cromo2[2]));
+        if(figuras.size()>4000){
+            figuras.add(new Figura(cromo[0],cromo[1],cromo[2]));
+            figuras.add(new Figura(cromo2[0],cromo2[1],cromo2[2]));
+        }
     }
     
     private void cruce(int x1){
-        //YA NO xd Validar si solo es uno o sí queda impar, para que se divida?
-        //RECORDAR TENER TAMAÑO LIMITE PARA QUE LUEGO EN VEZ DE SER 4 HIJOS SEAN 2
+        figuras.add(new Figura(figuras.get(x1).Cromosoma[0],figuras.get(x1).Cromosoma[1],figuras.get(x1).Cromosoma[2]));
+    }
+    
+    public void imprimirFiguras(){
+        
     }
 }

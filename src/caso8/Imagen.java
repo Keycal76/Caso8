@@ -33,13 +33,13 @@ public class Imagen {
         }
     }
     
-    public void analizarSectores() {
+    public void analizarSectores(Ventana vista) {
         int R=0;
         int G=0;
         int B=0;
         for(int sectorY=0;sectorY<5;sectorY++){
             for(int sectorX=0;sectorX<5;sectorX++){
-                sectores.add(new Sector(sectorX, sectorY,1));
+                sectores.add(new Sector(sectorX, sectorY,1,vista));
             }
         }
         int r=0,r2=0;

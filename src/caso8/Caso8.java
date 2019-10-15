@@ -41,7 +41,7 @@ public class Caso8 extends Frame implements ActionListener{
     public void analizarImagenes() { //"src/caso8/IMG"+Integer.toString(3)+".jpg"
         int x=3;
         imagenes.add(new Imagen("src/caso8/IMG"+Integer.toString(x)+".jpg"));
-        imagenes.get(0).analizarSectores();  
+        imagenes.get(0).analizarSectores(vista);  
         iniciarVista(x);
     }
     
