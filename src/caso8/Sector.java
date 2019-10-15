@@ -109,6 +109,7 @@ public class Sector {
     }
     
     public void sacarInformacionInicial(){
+        System.out.println("HEREEEEEEEE2");
         double total=0;
         double totalPuntos=0;
         for(int k=0;k<coloresHallados.length;k++){
@@ -158,24 +159,26 @@ public class Sector {
             }else{
                 targetColor[k]=temp+(int)(coloresHallados[k]/100*255);//Guarda la dirección donde empieza el intervalo
             }
-            System.out.println(k+" Desde "+temp+" hasta "+targetColor[k]);
+            //System.out.println(k+" Desde "+temp+" hasta "+targetColor[k]);
             temp+=(int)(coloresHallados[k]/100*255);
         }
+        
         for(int k=0;k<puntosXHallados.size();k++){
+            temp=0;
             int temp2=0;
-            for(int i=0;i<puntos.size();i++){
-                if(puntos.get(i).color.equals(colores.get(k))){
-                    try{
-                        
-                    } catch(ArrayIndexOutOfBoundsException e){
-
-                    }
-                }
-            }
-            //System.out.println(temp);
             for(int i=0;i<puntosXHallados.get(k).length;i++){
-                if(temp2>0){
+                if(i+1==puntosXHallados.get(k).length){
+                    targetX.get(k)[i]=255;
+                    targetY.get(k)[i]=255;
+                }else{
+                    targetX.get(k)[i]=temp+(int)(puntosXHallados.get(k)[i]/100*255);
+                    targetY.get(k)[i]=temp2+(int)(puntosYHallados.get(k)[i]/100*255);
                 }
+                System.out.println(k+" X: "+i+" Desde "+temp+" hasta "+targetX.get(k)[i]);
+                System.out.println(k+" Y: "+i+" Desde "+temp2+" hasta "+targetY.get(k)[i]);
+                System.out.println("            ");
+                temp+=(int)(puntosXHallados.get(k)[i]/100*255);
+                temp2+=(int)(puntosYHallados.get(k)[i]/100*255);
             }
         }
     }

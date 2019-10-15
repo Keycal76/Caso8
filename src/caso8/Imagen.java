@@ -91,11 +91,12 @@ public class Imagen {
                     sectores.get(d).posibilidad-=0.2;
                 }
             }
-            if(d==3){
-                sectores.get(d).sacarInformacionInicial();
-            }
             d++;
         }
+        d=3;
+        if(d==3){
+                sectores.get(d).sacarInformacionInicial();
+            }
     }
     
     public boolean analizarSector() {
