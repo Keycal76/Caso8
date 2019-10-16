@@ -414,8 +414,11 @@ public class Sector extends Frame{
             //System.out.println("Hijo 2 gen "+i+" "+cromo2[i]);
             int m=(int)(Math.random()*30)+1;
             //System.out.println("RANDOM: "+m);
-            if(m==2){
+            if(m<=5){
+                nuevo=mutacion(nuevo);
                 nuevo2=mutacion(nuevo2);
+                nuevo3=mutacion(nuevo3);
+                nuevo4=mutacion(nuevo4);
             }
         }
         figuras.add(new Figura(cromo[0],cromo[1],cromo[2]));
@@ -432,11 +435,12 @@ public class Sector extends Frame{
     }
     
     private String mutacion(String binario){
-        int r=(int)(Math.random()*6)+1;
-        if(binario.substring(r-1,r).equals("1")){
-            binario=binario.substring(0,r-1)+"0"+binario.substring(r+1,binario.length());
+        int r=(int)(Math.random()*5)+1;
+        r-=1;
+        if(binario.substring(r,r+1).equals("1")){
+            binario=binario.substring(0,r)+"0"+binario.substring(r+2,binario.length());
         }else{
-            binario=binario.substring(0,r-1)+"1"+binario.substring(r+1,binario.length());
+            binario=binario.substring(0,r)+"1"+binario.substring(r+2,binario.length());
         }
         return binario;
     }
@@ -464,7 +468,7 @@ public class Sector extends Frame{
             int tempX=0;
             boolean halladoY=false;
             int tempY=0;
-            for(int j=0;j<targetX.get(tempC).length;j++){
+            for(int j=0;j<targetX.get(tempC).length;j++){//Error acá-----------------------------------------
                 if(targetX.get(tempC)[j]>figuras.get(i).Cromosoma[1] && halladoX==false){
                     halladoX=true;
                     tempX=j-1;
