@@ -20,8 +20,8 @@ class Figura {
         Cromosoma[0]=C1;
         Cromosoma[1]=C2;
         Cromosoma[2]=C3;
-        System.out.println(Cromosoma[0]);
-        System.out.println(Cromosoma[1]);
-        System.out.println(Cromosoma[2]);
+        System.out.println("Gen1: "+Cromosoma[0]);
+        /*System.out.println("Gen2: "+Cromosoma[1]);
+        System.out.println("Gen3: "+Cromosoma[2]);*/
     }
 }

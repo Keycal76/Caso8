@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.awt.Color;
 import java.awt.Frame;
 import java.awt.Graphics;
+import java.util.Arrays;
 
 /**
  *
@@ -209,6 +210,7 @@ public class Sector extends Frame{
                     aux++;
                 }
             }
+            temp=desordenar(temp);
             for(int i=0;i<temp.length;i+=2){
                 try{
                     cruce(temp[i], temp[i+1]);
@@ -216,9 +218,10 @@ public class Sector extends Frame{
                     cruce(temp[i]);
                 }
             }
+            Arrays.sort(temp);
             eliminar(temp);
             imprimirFiguras();
-        }//RECORDAR TENER TAMAÑO LIMITE PARA QUE LUEGO EN VEZ DE SER 4 HIJOS SEAN 2
+        }
     }
     
     private boolean fitness(int x){
@@ -390,24 +393,36 @@ public class Sector extends Frame{
         //System.out.println("Cruce doble");
         int[] cromo=new int[3];
         int[] cromo2=new int[3];
+        int[] cromo3=new int[3];
+        int[] cromo4=new int[3];
         for(int i=0;i<3;i++){
             String b1=binario(figuras.get(x1).Cromosoma[i]);
             String b2=binario(figuras.get(x2).Cromosoma[i]);
-            int r=(int)(Math.random()*4);
-            String nuevo=b1.substring(0, 2+r)+b2.substring(2+r, b2.length());
+            //System.out.println("Padre 1 gen "+i+" "+figuras.get(x1).Cromosoma[i]);
+            //System.out.println("Padre 2 gen "+i+" "+figuras.get(x2).Cromosoma[i]);
+            int r=(int)(Math.random()*3)+1;
+            //System.out.println("RANDOM: "+r);
+            String nuevo=b1.substring(0, r)+b2.substring(r, b2.length());
             String nuevo2=b2.substring(0, 3+r)+b1.substring(3+r, b1.length());
+            String nuevo3=b1.substring(0, 4+r)+b2.substring(4+r, b2.length());
+            String nuevo4=b2.substring(0, r)+b1.substring(r, b1.length());
             cromo[i]=(int)Long.parseLong(nuevo, 2);
             cromo2[i]=(int)Long.parseLong(nuevo2, 2);
-            int m=(int)(Math.random()*30);
-            if(m==1){
+            cromo3[i]=(int)Long.parseLong(nuevo3, 2);
+            cromo4[i]=(int)Long.parseLong(nuevo4, 2);
+            //System.out.println("Hijo 1 gen "+i+" "+cromo[i]);
+            //System.out.println("Hijo 2 gen "+i+" "+cromo2[i]);
+            int m=(int)(Math.random()*30)+1;
+            //System.out.println("RANDOM: "+m);
+            if(m==2){
                 nuevo2=mutacion(nuevo2);
             }
         }
         figuras.add(new Figura(cromo[0],cromo[1],cromo[2]));
         figuras.add(new Figura(cromo2[0],cromo2[1],cromo2[2]));
         if(figuras.size()<4000){
-            figuras.add(new Figura(cromo[0],cromo2[1],cromo[2]));
-            figuras.add(new Figura(cromo2[0],cromo[1],cromo2[2]));
+            figuras.add(new Figura(cromo3[0],cromo3[1],cromo3[2]));
+            figuras.add(new Figura(cromo4[0],cromo4[1],cromo4[2]));
         }
     }
     
@@ -430,7 +445,7 @@ public class Sector extends Frame{
         for(int i=0;i<figuras.size();i++){
             boolean hallado=false;
             int tempC=0;
-            for(int j=0;j<targetColor.length;j++){
+            for(int j=0;j<targetColor.length;j++){//En vez de 0, 1 quizá
                 //System.out.println(figuras.get(i).Cromosoma[0]);
                 if(targetColor[j]>figuras.get(i).Cromosoma[0] && hallado==false){
                     hallado=true;
@@ -440,7 +455,10 @@ public class Sector extends Frame{
             if(hallado==false){
                 tempC=targetColor.length;
             }
-            figuras.get(i).color=colores.get(tempC);
+            //System.out.println(figuras.get(i).Cromosoma[0]+" El color es: "+tempC);
+            try{
+                figuras.get(i).color=colores.get(tempC);//Error acá------------------------------------
+            }catch(java.lang.IndexOutOfBoundsException e){}
             //System.out.println(colores.get(tempC));
             boolean halladoX=false;
             int tempX=0;
@@ -462,7 +480,7 @@ public class Sector extends Frame{
             if(halladoY==false){
                 tempY=targetY.get(tempC).length;
             }
-            figuras.get(i).x=targetX.get(tempC)[tempX];
+            figuras.get(i).x=targetX.get(tempC)[tempX];//Error acá----------------------------------------------------
             figuras.get(i).y=targetY.get(tempC)[tempY];
         }
         paint(this.vista.panelImagen.getGraphics());
@@ -475,7 +493,36 @@ public class Sector extends Frame{
         for(int i=0;i<figuras.size();i++){
             //System.out.println("HERE "+i+" x "+figuras.get(i).x+" y "+figuras.get(i).y+" C "+figuras.get(i).color);
             g.setColor(figuras.get(i).color);
-            g.drawOval(figuras.get(i).x+(this.x*204), figuras.get(i).y+(this.y*204), 2, 2);
+            g.fillOval(figuras.get(i).x+(this.x*204), figuras.get(i).y+(this.y*204), 4, 4);
         }
+    }
+    
+    public int[] desordenar(int[] matriz){
+        int tamaño=matriz.length;
+        int Aleatorio,aux;
+
+        for(int i=0;i<tamaño;i++){
+            Aleatorio= (int)(Math.random()*tamaño-1);
+            aux=matriz[i];
+            matriz[i]=matriz[Aleatorio];
+            matriz[Aleatorio]=aux;
+        }
+        return matriz;
+    }
+    
+    public int[] ordenar(int[] a){     
+        int menor;
+        for(int i=0;i<10;i++){
+            menor=a[0];
+            if (a[i]<menor){
+                menor=a[i];
+            }
+            else{
+                if(a[i]>menor){
+                  menor=menor;
+                }      
+            }
+        }
+        return a;
     }
 }
